@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Menu Planillas";
+}
+
+@model List<MenuOption>
+
+<p>Si su empresa utiliza un reloj de marcación, donde los empleados registran sus respectivas entradas y salidas de la jornada de trabajo y si éste reloj tiene la capacidad de guardar estas marcaciones en un archivo, <payday>PayDay</payday> -con su módulo especial de interfaz con reloj-, le permite importar estas marcaciones para realizar el pago de la planilla de acuerdo a los datos que registra el reloj.</p>
+
+<p>Si usted no cuenta con un reloj de éste tipo o todavía no ha implementado la interfaz con el reloj, no necesita utilizar ésta opción, podrá realizar los pagos con los otros <a asp-controller="PayDay" asp-action="Mantenimiento" asp-route-viewName="MetodosDeCaptura">Métodos de captura</a> que PayDay le ofrece.</p>
+
+<p>Veamos ahora como trabajar con interfaz de reloj en PayDay:</p>
+
+<p align="center"><img src="\images\Planillas\Menu_reloj.png"></p>
+
+<p>Para realizar una planilla utilizando el interfaz con el reloj, seleccione <i>Planilla|Reloj</i> y siga los siguientes pasos:</p>
+
+<h3>1.	Respaldo de Archivos</h3>
+Es recomendable iniciar la planilla haciendo un respaldo de archivos, con el objetivo de tener una copia de los datos antes de realizar la lectura del reloj y de comenzar a trabajar la planilla; esta copia puede ser útil si ocurre algún inconveniente con la importación o la generación de la planilla o simplemente si requiere hacer otros procesos antes de leer el reloj y hacer la planilla.
+
+<h3>2.	Importar Lectura del Reloj</h3>
+En este proceso, vamos a hacer la lectura del archivo del Reloj. PayDay le pregunta  cuál es el nombre del archivo que desea importar (donde están las marcaciones). Seleccione el archivo, luego siga las instrucciones de la pantalla.
+
+<h3>3.	Listado de Lecturas del Reloj</h3> ( ** )
+Luego de haber importado el archivo del Reloj, con esta opción, usted podrá ver un listado con las marcaciones contenidas en el archivo importado.
+
+<h3>4.	Empleados Presentes </h3>
+Este es un reporte que le presenta una lista con los empleados que pasaron con datos en la importación de las lecturas del reloj.
+
+<h3>5.	Detalle de Entradas y Salidas</h3> ( ** )
+En esta opción podrá ver un listado en detalle de las marcaciones clasificadas por empleado, asociando las marcaciones de entrada con las marcaciones de salida.
+
+<h3>6.	Listado de Incompletos</h3> ( ** )
+Es un reporte muy útil, que le muestra los empleados que tienen marcaciones incompletas; es decir, que en algún momento no marcaron su entrada o salida del trabajo.
+
+<h3>7.	Eliminar Lectura del Reloj</h3>
+Es posible eliminar la lectura del archivo del reloj, quizás para volverla hacer.  Si es así, entonces tome esta opción.
+
+Una vez realizado el interfaz y luego de revisar la información proveniente del reloj, podemos comenzar a trabajar la planilla y para ello debemos seguir los pasos para realizar una <%= TopicLink([Planilla Regular.],[Planillas Regulares]) %>
+<br>
+
+
+<style>
+    #disclaimer {
+        font-size: 16px;
+        font-weight: 700;
+    }
+</style>
+<p id="disclaimer">( ** ) Los datos mostrados en esta opción, dependen de como se reciba la información, es decir, si el reloj pasa a PayDay un resumen por empleado, entonces no podremos ver aquí las marcaciones día a día del trabajador.</p>

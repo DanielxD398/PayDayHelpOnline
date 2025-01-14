@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Menu Planillas";
+}
+
+@model List<MenuOption>
+
+<p>La primera opción del Menú Principal de PayDay es Planillas, en ella podrá realizar cada una de las planillas de pago a sus trabajadores.</p>
+
+<p>Como veremos a continuación, PayDay cuenta con diferentes tipos de planillas, clasificadas por su frecuencia de pago y por pagos especiales.  Veremos también la forma de trabajar cada una de ellas.</p>
+
+<p>Al tomar la opción Planillas, se pueden observar el menú que se ilustra a continuación, con las siguientes opciones:</p>
+
+<style>
+    #planillas-table {
+        width: 50%;
+        border: 1px #F5FAFF;
+    }
+
+    table td {
+        border: solid 2px #F5FAFF;
+    }
+
+</style>
+<table align="center" id="planillas-table">
+    <tr>
+        <td><p align="CENTER"><img src="\images\Planillas\Menu_planillas.png"></p></td>
+        <td>
+            <ul>
+                @* Acceder a la primera opción del menú *@
+                @if (Model != null && Model.Any())
+                {
+                    var firstOption = Model.First(); // Obtener la primera opción del menú
+                    @* Sub-opciones 1 *@
+                    @if (firstOption.SubOptions1 != null && firstOption.SubOptions1.Any())
+                    {
+                        @foreach (var subOption in firstOption.SubOptions1)
+                        {
+                            <li>
+                                <a href="@Url.Action(subOption.Action, firstOption.Controller, new { subTopic = subOption.Parameters })">
+                                    @subOption.Name
+                                </a>
+                            </li>
+                        }
+
+                    }
+                }
+            </ul>
+        </td>
+    </tr>
+</table>
