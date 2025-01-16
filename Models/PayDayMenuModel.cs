@@ -1,21 +1,27 @@
+using PayDayHelpOnline.Models;
+
 namespace PayDayHelpOnline.Models
 {
-    public class MenuOption
+
+    public class MainMenu
     {
-        public string Name { get; set; } // Nombre de la opción principal
-        public string Controller { get; set; } // Controlador asociado
-        public string Action { get; set; } // Acción asociada
-        public string Description { get; set; } // Acción asociada
-        public List<SubOption> SubOptions1 { get; set; } // Sub-opciones asociadas
-        public List<SubOption> SubOptions2 { get; set; } // Sub-opciones asociadas
+        public MenuModel Menu { get; set; } = new MenuModel();
     }
 
-    public class SubOption
+    public class MenuModel
     {
-        public string Name { get; set; } // Nombre de la sub-opción
-        public string Action { get; set; } // Acción asociada
-        public string Description { get; set; } // Descripción o tooltip (opcional)
-        public string Parameters { get; set; } // Parámetro adicional
+        // Lista que contiene las opciones de primer nivel
+        public List<MenuOption> MenuOptions { get; set; }
+    }
+
+    public class MenuOption
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public string Description { get; set; }
+        public List<MenuOption> SubOptions { get; set; } // Submenús de la opción actual
     }
 
 }

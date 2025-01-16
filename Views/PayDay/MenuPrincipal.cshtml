@@ -1,8 +1,9 @@
 ﻿@{
-	ViewData["Title"] = "Menu Principal de PayDay";
+    ViewData["Title"] = "Menu Principal de PayDay";
+    Layout = null;
 }
 
-@model List<MenuOption>
+@model PayDayHelpOnline.Models.MainMenu// Cambia a tu modelo real
 
 Aquí están las opciones que tiene PayDay en su menú principal
 
@@ -10,7 +11,7 @@ Aquí están las opciones que tiene PayDay en su menú principal
 
 Tal como lo muestra la figura anterior, el Menú Principal cuenta con las siguientes opciones, veamos cada una de ellas:
 <ul>
-    @foreach (var option in Model)
+    @foreach (var option in Model.Menu.MenuOptions)
     {
         <li>
             <a href="@Url.Action(option.Action, option.Controller)">@option.Name</a>

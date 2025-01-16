@@ -52,7 +52,7 @@
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     --bs-body-font-family: var(--bs-font-sans-serif);
-    --bs-body-font-size: 1.1rem;
+    --bs-body-font-size: 1rem;
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.5;
     --bs-body-color: #212529;
@@ -4411,6 +4411,10 @@ list-style-type: none;
 padding-left: 0;
 }
 
+.sidebar .opt {
+font-size: 1.1rem;
+}
+
 .sidebar ul li a {
 text-decoration: none;
 color: #333;
@@ -4418,6 +4422,15 @@ color: #333;
 
 .sidebar ul li a:hover {
     color: #007bff;
+}
+
+.submenu {
+    font-size: 0.875rem; /* Tamaño de fuente ligeramente más pequeño (14px) */
+    color: #6c757d; /* Color opcional para diferenciar los submenús */
+}
+
+.submenu .nav-link {
+    padding-left: 1rem; /* Opcional: Mayor sangría para diferenciar visualmente */
 }
 
 .main-content {
@@ -4435,7 +4448,6 @@ color: #333;
 
 .nav-link {
     display: block;
-    padding: .5rem 1rem;
     color: #0d6efd;
     text-decoration: none;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out

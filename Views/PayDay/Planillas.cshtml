@@ -1,8 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Menu Planillas";
+    Layout = null; // Deshabilita el layout para esta vista
+    var menu = ViewData["Menu"] as MainMenu;
 }
-
-@model List<MenuOption>
 
 <p>La primera opción del Menú Principal de PayDay es Planillas, en ella podrá realizar cada una de las planillas de pago a sus trabajadores.</p>
 
@@ -25,26 +25,36 @@
     <tr>
         <td><p align="CENTER"><img src="\images\Planillas\Menu_planillas.png"></p></td>
         <td>
-            <ul>
-                @* Acceder a la primera opción del menú *@
-                @if (Model != null && Model.Any())
+
+            @if (menu != null)
+            {
+                // Buscar la opción de "Planillas"
+                var planillasOption = menu.Menu.MenuOptions.FirstOrDefault(option => option.Name == "Planillas");
+
+                if (planillasOption != null && planillasOption.SubOptions != null && planillasOption.SubOptions.Any())
                 {
-                    var firstOption = Model.First(); // Obtener la primera opción del menú
-                    @* Sub-opciones 1 *@
-                    @if (firstOption.SubOptions1 != null && firstOption.SubOptions1.Any())
-                    {
-                        @foreach (var subOption in firstOption.SubOptions1)
+                    // Iterar sobre las subopciones de "Planillas"
+                    <ul class="navbar-nav flex-column ms-3 fs-6 text-muted">
+                        @foreach (var suboption in planillasOption.SubOptions)
                         {
-                            <li>
-                                <a href="@Url.Action(subOption.Action, firstOption.Controller, new { subTopic = subOption.Parameters })">
-                                    @subOption.Name
+                            <li class="nav-item mb-1">
+                                <a class="text-dark" href="#" data-topic="@suboption.Action">
+                                    @suboption.Name
                                 </a>
                             </li>
                         }
-
-                    }
+                    </ul>
                 }
-            </ul>
+                else
+                {
+                    <p>No hay subopciones para Planillas.</p>
+                }
+            }
+            else
+            {
+                <p>No se encontró el menú.</p>
+            }
+
         </td>
     </tr>
 </table>

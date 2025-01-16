@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,7 +16,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PayDayHelpOnline</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="">PayDayHelpOnline</a>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @ViewData["Title"]
                 </div>
@@ -23,35 +26,112 @@
 
     <aside>
         <div class="sidebar">
-            <div class="container-fluid">
+            <div class="container-fluid" style="height:825px; overflow-x: hidden; overflow-y: auto;">
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-column">
-                        <!-- Opción principal -->
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Inicio">Inicio</a>
-                        </li>
-
-                        <!-- Menú desplegable -->
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" data-bs-toggle="collapse" href="#submenu-qhdn" role="button" aria-expanded="false" aria-controls="submenu-qhdn">
-                                ¿Qué hay de nuevo?
-                            </a>
+                    <ul class="nav flex-column" id="topicsTree">
+                        <!--QHDN-->
+                        <li class="nav-item mb-3">
+                            <a class="text-dark opt" data-bs-toggle="collapse" href="#submenu-qhdn" role="button" aria-expanded="false" aria-controls="submenu-qhdn">¿Qué hay de nuevo?</a>
                             <div class="collapse" id="submenu-qhdn">
-                                <ul class="navbar-nav flex-column ms-3">
+                                <ul class="navbar-nav flex-column ms-3 fs-6 text-muted">
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" href="#subtopic1">Subtópico 1</a>
+                                        <a class="nav-link" href="#subtopic1">PayDay</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" href="#subtopic2">Subtópico 2</a>
+                                        <a class="nav-link" href="#subtopic2">PayDayCloud</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#subtopic3">Productos Nuevos</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
+                        <!--PLANILLAS-->
+                        @if (MenuService != null)
+                        {
+                            var model = MenuService.GetMenu();
+                            if (model?.Menu?.MenuOptions != null)
+                            {
+                                @foreach (var option in model.Menu.MenuOptions)
+                                {
+                                    <li class="nav-item mb-2">
+                                        <a class="text-dark mb-2 opt" data-bs-toggle="collapse" href="#submenu-@option.Id" role="button" aria-expanded="false" aria-controls="submenu-@option.Id" data-topic="@option.Action">
+                                            @option.Name
+                                        </a>
 
-                        <!-- Otra opción principal -->
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="PayDayCloud">PayDayCloud</a>
-                        </li>
+                                        @if (option.SubOptions != null && option.SubOptions.Any())
+                                        {
+                                            <div class="collapse" id="submenu-@option.Id">
+                                                <ul class="navbar-nav flex-column ms-3 fs-6 text-muted">
+                                                    @foreach (var suboption in option.SubOptions)
+                                                    {
+                                                        <li class="nav-item mb-1">
+                                                            <a class="nav-link mb-2" data-bs-toggle="collapse" href="#submenu-@suboption.Id" role="button" aria-expanded="false" aria-controls="submenu-@suboption.Id" data-topic="@suboption.Action">
+                                                                @suboption.Name
+                                                            </a>
+                                                            @if (suboption.SubOptions != null && suboption.SubOptions.Any())
+                                                            {
+                                                                <div class="collapse" id="submenu-@suboption.Id">
+                                                                    <ul class="navbar-nav flex-column ms-3 fs-6 text-muted">
+                                                                        @foreach (var subsuboption in suboption.SubOptions)
+                                                                        {
+                                                                            <li class="nav-item mb-1">
+                                                                                <a class="nav-link mb-2" data-bs-toggle="collapse" href="#submenu-@subsuboption.Id" role="button" aria-expanded="false" aria-controls="submenu-@subsuboption.Id" data-topic="@subsuboption.Action">
+                                                                                    @subsuboption.Name
+                                                                                </a>
+                                                                                @if (subsuboption.SubOptions != null && subsuboption.SubOptions.Any())
+                                                                                {
+                                                                                    <div class="collapse" id="submenu-@subsuboption.Id">
+                                                                                        <ul class="navbar-nav flex-column ms-3 fs-6 text-muted">
+                                                                                            @foreach (var topic in subsuboption.SubOptions)
+                                                                                            {
+                                                                                                <li class="nav-item mb-1">
+                                                                                                    <a class="nav-link mb-2" data-bs-toggle="collapse" href="#submenu-@topic.Id" role="button" aria-expanded="false" aria-controls="submenu-@topic.Id" data-topic="@topic.Action">
+                                                                                                        @topic.Name
+                                                                                                    </a>
+                                                                                                    @if (topic.SubOptions != null && topic.SubOptions.Any())
+                                                                                                    {
+                                                                                                        <div class="collapse" id="submenu-@topic.Id">
+                                                                                                            <ul class="navbar-nav flex-column ms-3 fs-6 text-muted">
+                                                                                                                @foreach (var subtopic in topic.SubOptions)
+                                                                                                                {
+                                                                                                                    <li class="nav-item mb-1">
+                                                                                                                        <a class="nav-link" href="#" data-topic="@subtopic.Action">
+                                                                                                                            @subtopic.Name
+                                                                                                                        </a>
+                                                                                                                    </li>
+                                                                                                                }
+                                                                                                            </ul>
+                                                                                                        </div>
+                                                                                                    }
+                                                                                                </li>
+                                                                                            }
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                }
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <p>No hay opciones de menú disponibles.</p>
+                            }
+                        }
+                        else
+                        {
+                            <p>Error: El servicio de menú no está disponible.</p>
+                        }
+
                     </ul>
                 </div>
             </div>
@@ -75,6 +155,39 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Selecciona ambos tipos de enlaces en un solo selector
+            document.querySelectorAll('.nav-link, .text-dark').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const topic = this.dataset.topic; // Obtener el topic seleccionado
+                    console.log(topic);
+                    loadTopic(topic); // Llamar función para cargar el contenido
+                });
+            });
+
+            // Función para cargar el contenido dinámico
+            function loadTopic(topic) {
+                fetch(`/Help/GetTopicContent?topic=${topic}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        // Reemplaza el contenido principal en el 'main' con el id/rol correspondiente
+                        document.querySelector('main[role="main"].pb-3').innerHTML = html;
+                    })
+                    .catch(error => console.error('Error loading topic:', error));
+            }
+        });
+    </script>
+
 </body>
 </html>
+
+@section Scripts
+{
+   
+}
+
