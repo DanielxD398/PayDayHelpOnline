@@ -1,0 +1,66 @@
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+@{
+    ViewData["Title"] = "Menu Planillas";
+    Layout = null; // Deshabilita el layout para esta vista
+}
+
+<p>La primera opción del Menú Principal de PayDay es Planillas, en ella podrá realizar cada una de las planillas de pago a sus trabajadores.</p>
+
+<p>Como veremos a continuación, PayDay cuenta con diferentes tipos de planillas, clasificadas por su frecuencia de pago y por pagos especiales.  Veremos también la forma de trabajar cada una de ellas.</p>
+
+<p>Al tomar la opción Planillas, se pueden observar el menú que se ilustra a continuación, con las siguientes opciones:</p>
+
+<style>
+    #planillas-table {
+        width: 50%;
+        border: 1px #F5FAFF;
+    }
+
+    table td {
+        border: solid 2px #F5FAFF;
+    }
+
+</style>
+<table align="center" id="planillas-table">
+    <tr>
+        <td><p align="CENTER"><img src="\images\Planillas\Menu_planillas.png"></p></td>
+        <td>
+
+            @if (MenuService != null)
+            {
+                var model = MenuService.GetMenu();
+                if (model?.Menu?.MenuOptions != null)
+                {
+                    // Buscar la opción de "Planillas"
+                    var planillasOption = model.Menu.MenuOptions.FirstOrDefault(option => option.Id == "pla");
+
+                    if (planillasOption != null && planillasOption.SubOptions != null && planillasOption.SubOptions.Any())
+                    {
+                        // Iterar sobre las subopciones de "Planillas"
+                        <ul class="navbar-nav flex-column ms-3 fs-6 text-muted">
+                            @foreach (var suboption in planillasOption.SubOptions)
+                            {
+                                <li class="nav-item mb-1">
+                                    <a class="nav-link mb-2" data-bs-toggle="collapse" href="#submenu-@suboption.Id" role="button" aria-expanded="false" aria-controls="submenu-@suboption.Id" data-topic="@planillasOption.Action/@suboption.Action">
+                                        @suboption.Name
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No hay subopciones para Planillas.</p>
+                    }
+                }
+                else
+                {
+                    <p>No se encontró el menú.</p>
+                }
+            }
+
+        </td>
+    </tr>
+</table>

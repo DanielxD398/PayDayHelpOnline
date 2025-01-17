@@ -1,0 +1,15 @@
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+@{
+    ViewData["Title"] = "Menu Planillas";
+    Layout = null; // Deshabilita el layout para esta vista
+}
+
+Si existe uno o más trabajadores con estatus diferente a Activo,  porque están de Vacaciones, de Licencia o Suspendidos,  se le mostrará una pantalla con el listado de éstos trabajadores, de forma que usted pueda indicar si alguno de ellos debe Activarse, para que así se incluyan en la planilla que se está generando, tal como lo muestra la siguiente ilustración:
+
+<p align="CENTER"><img src="\images\Planillas\regular_antes_generar.png"></p>
+
+Active a los empleados que necesita y luego presione <
+<img src="\images\Botones\activar.png"> o presione <
+<img src="\images\Botones\Cancelar2.png"> para no activar a ningún trabajador y continuar con la generación. 

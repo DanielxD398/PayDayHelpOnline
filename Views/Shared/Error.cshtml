@@ -1,6 +1,8 @@
 ﻿@model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
+    Layout = null; // Deshabilita el layout para esta vista
+    var model = Model ?? new ErrorViewModel();
 }
 
 <h1 class="text-danger">Error.</h1>

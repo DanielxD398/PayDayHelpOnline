@@ -18,14 +18,14 @@ namespace PayDayHelpOnline.Controllers
 
         public IActionResult Inicio()
         {
-            var menu = _menuService.GetMenu();
-            if (menu == null)
-            {
-                throw new InvalidOperationException("El servicio de menú devolvió un valor nulo.");
-            }
+            // Esto se ejecuta cuando acceden a localhost:puerto
+            return View();  // Muestra la vista "Index" del controlador Home
+        }
 
-            ViewData["Menu"] = menu;
-            return View();
+        // Redirige desde la raíz a una acción o página personalizada
+        public IActionResult RedirectToInicio()
+        {
+            return RedirectToAction("Inicio", "Home");
         }
 
         public IActionResult qhdn()

@@ -1,0 +1,109 @@
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+@{
+    ViewData["Title"] = "Menu Planillas";
+    Layout = null; // Deshabilita el layout para esta vista
+}
+
+<p>Generar Transacciones es el primer paso para hacer una planilla. Al tomar esta opción puede encontrarse con estas tres situaciones:</p>
+
+@if (MenuService != null)
+{
+    var model = MenuService.GetMenu();
+    if (model?.Menu?.MenuOptions != null)
+    {
+        // Buscar la opción de "Planillas"
+        var planillasOption = model.Menu.MenuOptions.FirstOrDefault(option => option.Id == "pla");
+
+        if (planillasOption != null && planillasOption.SubOptions != null && planillasOption.SubOptions.Any())
+        {
+            var planillasSubOption = planillasOption.SubOptions.FirstOrDefault(option => option.Id == "pla-regulares");
+
+            if (planillasSubOption != null && planillasSubOption.SubOptions != null && planillasSubOption.SubOptions.Any())
+            {
+                var generarSuboption = planillasSubOption.SubOptions.FirstOrDefault(option => option.Id == "pla-regulares-generar");
+
+                if (generarSuboption != null && generarSuboption.SubOptions != null && generarSuboption.SubOptions.Any())
+                {
+                    // Iterar sobre las subopciones de "Planillas"
+                    <ol class="fs-6 text-muted">
+                        @foreach (var suboption in generarSuboption.SubOptions)
+                        {
+                            if (suboption.List)
+                            {
+                                <li class="nav-item mb-1">
+                                    <a class="btn-link mb-2" data-bs-toggle="collapse" href="#submenu-@suboption.Id" role="button" aria-expanded="false" aria-controls="submenu-@suboption.Id" data-topic="@planillasOption.Action/@planillasSubOption.Action/@generarSuboption.Action/@suboption.Action">
+                                        @suboption.Name
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ol>
+                }
+                else
+                {
+                    <p>No hay subopciones para Planillas Regulares.</p>
+                }
+            }
+        }
+        else
+        {
+            <p>No hay subopciones para Planillas.</p>
+        }
+    }
+    else
+    {
+        <p>No se encontró el menú.</p>
+    }
+}
+
+<p>Luego se muestra la pantalla de generación que nos muestra las fechas de corte de la planilla a realizar.  Usted solamente asegúrese que sean las fechas correctas. </p>
+	
+<p>Las fechas de corte de las planillas tienen opciones para el Salario Regular, las Ausencias y Tardanzas y el Sobretiempo.  Para la mayoría de las empresas, las fechas son las mismas para las tres opciones y quienes la deben cambiar son las que llevan en PayDay el registro diario de los horarios de los trabajadores y que al pagar las planillas los cortes de las fechas difieren entre sí.</p>
+
+<p align="center"><img src="images\Planillas\regular_fecha_generar.png"></p>
+
+
+<table class="table table-striped table-bordered" align="center" width="90%">
+    <thead>
+        <tr>
+            <th width="11%" align="center">Campo</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Inicio del Período</td>
+            <td>Indica la fecha inicial de la planilla a confeccionar.  Esta fecha no puede ser modificada directamente en la pantalla, es decir, es un campo restringido, ya que regularmente el usuario no debería tener que cambiarla  porque PayDay lleva la secuencia de las fechas automáticamente, por lo cual las mismas siempre deben ser las correctas, excepto en el caso que sea la primera planilla que realice en ese grupo de pago y de ser así, no olvide que debe configurarla en el campo último día pagado que se encuentra en <i>Mantenimiento|Grupos de Pago</i>. </td>
+        </tr>
+        <tr>
+            <td>Final del Período</td>
+            <td>Es el último día de la planilla que se va a confeccionar y PayDay la calcula sumando la cantidad de días en el período seleccionado a la fecha inicial.  A diferencia de la fecha inicial, ésta si puede ser modificada.</td>
+        </tr>
+        <tr>
+            <td Nowrap>Fecha de la Planilla</td>
+            <td>Corresponde al último día de la planilla que se va a generar e indica la fecha oficial de la planilla, por lo tanto ésta es quizás la fecha más importante porque es con la que se graba el registro de la planilla de cada trabajador que esté en ella. </td>
+        </tr>
+        <tr>
+            <td>Generada Por</td>
+            <td>Aquí el sistema le mostrará el nombre del usuario que genera la planilla y así lo guarda en la historia de la misma.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Una vez revisadas las fecha de los cortes a utilizar, seleccione una de las siguientes opciones:</p>
+	
+	<img src="\images\Botones\Generar.png">	 Para iniciar con la generación de la planilla, a la misma se le asignará un número secuencial y a cada empleado un número de transacción.  
+	
+	<img src="\images\Botones\Cancelar2.png">	Para salir de la pantalla sin generar la planilla.  
+<br>
+
+<style>
+#disclaimer{
+    font-size: 16px;
+    font-weight: 700;
+}
+</style>
+<p id="disclaimer">
+**  En la generación se incluyen algunos valores de los datos del trabajador como lo son las horas regulares (horas base), los ingresos predeterminados y los descuentos que se deben efectuar para pagar a los acreedores.</p>

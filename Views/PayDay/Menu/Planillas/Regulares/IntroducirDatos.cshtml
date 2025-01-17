@@ -1,0 +1,37 @@
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+@{
+    ViewData["Title"] = "Menu Planillas";
+    Layout = null; // Deshabilita el layout para esta vista
+}
+
+<p>Esta es la opción en donde vamos a registrar los datos de la planilla, podrá introducir o modificar las horas a pagar, ya sean regulares o extraordinarias, registrar las ausencias y tardanzas, así como cualquier otro ingreso adicional que se le deba pagar al trabajador en su planilla. Inclusive, podrá pagar reembolsos por gastos de transporte y/o viáticos.</p>
+
+<p>Al tomar esta opción, si los métodos de captura de acuerdo al horario asignado varían, veremos la siguiente pantalla. Seleccione el grupo de empleados con el que desea trabajar: Entradas y Salidas y/o Pantalla Estándar.</p>
+
+<p align="CENTER"><img src="\images\Planillas\seleccion_metodo.png"></p>
+
+<p>Si tiene un sólo tipo de pantalla o luego de hacer la selección anterior, sigue la pantalla de Introducir datos, la cual tiene tres etiquetas, las que describiremos por separado, así:</p>
+
+
+<style>
+    #introducir-datos {
+        width: 50%;
+        border: 1px #F5FAFF;
+    }
+
+    table td {
+        border: solid #F5FAFF;
+    }
+</style>
+
+<p align="center"> <img src="\images\Planillas\Introducir\etiquetas.png" alt="tomar-captura"></p>
+<table align="center" id="introducir-datos">
+    <tr>
+        <td align="right" nowrap><a class="btn-link" href="#" aria-controls="submenu-pla-regulares-introducir-seleccionar" data-topic="Planillas/Regulares/IntroducirDatos">Seleccionar</a></td>
+        <td align="center" nowrap><a class="btn-link" href="#" aria-controls="submenu-pla-regulares-introducir-salariosysob" data-topic="Planillas/Regulares/IntroducirDatos">Salarios y Sobretiempos</a></td>
+        <td align="left" nowrap><a class="btn-link" href="#" aria-controls="submenu-pla-regulares-introducir-otrosing" data-topic="Planillas/Regulares/IntroducirDatos">Otros Ingresos</a></td>
+    </tr>
+</table>
+

@@ -21,6 +21,7 @@ namespace PayDayHelpOnline.Models
         public string Controller { get; set; }
         public string Action { get; set; }
         public string Description { get; set; }
+        public bool List { get; set; } = true;
         public List<MenuOption> SubOptions { get; set; } // Submenús de la opción actual
     }
 

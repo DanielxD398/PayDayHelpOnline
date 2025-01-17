@@ -1,0 +1,29 @@
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+@{
+    ViewData["Title"] = "Menu Planillas";
+    Layout = null; // Deshabilita el layout para esta vista
+}
+
+<p>PayDay cuenta con un módulo que permite confeccionar varias planillas de un mismo grupo de pago, siempre con la fecha del período que secuencialmente corresponde. Es decir, usted puede generar una planilla Quincenal o Semanal, para un grupo de empleados, ya sea de un departamento o sucursal, o simplemente eligiendo uno por uno.</p>
+
+<p>Para poder utilizar Múltiples Planillas, es requerido activar un parámetro en <i>Mantenimiento|Configuración|Opciones, pestaña Misceláneos</i>. Active el parámetro que dice Generar Múltiples Planillas Regulares. Al hacerlo, se le solicita la contraseña, escriba:  <b>"masplanillas"</b>.</p>
+
+<p align="CENTER"><img src="\images\Planillas\MultiplesPanillas\Mult_generar.png" alt="tomar-captura"></p>
+
+Al Generar Transacciones, en la parte inferior de la pantalla se muestran las siguientes opciones:
+
+<li>
+    <b>Selección de empleados:</b> Con este botón se activa una pantalla para realizar la selección de los empleados.  En la misma, se podrá filtrar y/o escojer a los empleados que debe ingresar a la planilla, clasificados por horarios, departamentos, sucursal, entre otros.
+
+    Los otros 3 botones son reportes de verificación:
+
+<li>
+    <b>Empleados Seleccionados:</b> Muestra el listado de los trabajadores seleccionados para esta planilla que se está generando.
+
+    <p align="CENTER"><img src="\images\Planillas\MultiplesPanillas\Mult_seleccionados.png" alt="tomar-captura"></p>
+<li><b>Empleados Pendientes de Pago:</b> Muestra los empleados a los que aún le falta realizar la planilla regular del periodo.
+<li><b>Empleados en conflicto:</b>  Muestra a los empleados que su fecha de ultimo dia pagado es superior a la fecha de inicio de la planilla que se esta generando.
+
+

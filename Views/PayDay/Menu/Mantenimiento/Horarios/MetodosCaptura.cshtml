@@ -1,0 +1,72 @@
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+@{
+    ViewData["Title"] = "Menu Planillas";
+    Layout = null; // Deshabilita el layout para esta vista
+}
+
+<p>Con la finalidad de facilitar la labor de confección de las planillas, PayDay cuenta con diferentes formas de ingresar los datos o la información para el pago de los salarios.  Es importante que el usuario conozca los diferentes métodos que PayDay le proporciona y la funcionalidad de cada uno, para poder realizar la selección apropiada del mismo. </p>
+
+<p>Para seleccionar el o los métodos a utilizar, se debe tomar en consideración los siguientes aspectos: </p>
+<ul>
+<li>Primero:  La forma en que la persona que realiza la planilla recibe los datos, es decir si es día a día, un resumen de todo o si solo son los cambios que debe realizar.
+
+<li>Segundo:  La forma en que está pactado el salario de los trabajadores (mensual o por hora). 
+
+<li>Tercero:   En la medida de lo posible, buscar la forma de disminuir los procedimientos, y así obtener los mejores resultados en el menor tiempo.  
+</ul>
+En cada empresa en el sistema PayDay, puede utilizarse más de un método de introducción de datos; así por ejemplo, podemos utilizar uno de los métodos del  reloj de marcación para los trabajadores del departamento de producción y para los supervisores o gerentes (que no marcan en el reloj), pueden usar el método Sobretiempo de Entrada / Salida.  
+
+<p>Veamos los diversos Métodos de Captura de Datos de PayDay y la funcionalidad de cada uno.  </p>
+
+@if (MenuService != null)
+{
+    var model = MenuService.GetMenu();
+    if (model?.Menu?.MenuOptions != null)
+    {
+        // Buscar la opción de "Planillas"
+        var planillasOption = model.Menu.MenuOptions.FirstOrDefault(option => option.Id == "mant");
+
+        if (planillasOption != null && planillasOption.SubOptions != null && planillasOption.SubOptions.Any())
+        {
+            var planillasSubOption = planillasOption.SubOptions.FirstOrDefault(option => option.Id == "mant-horarios");
+
+            if (planillasSubOption != null && planillasSubOption.SubOptions != null && planillasSubOption.SubOptions.Any())
+            {
+                var generarSuboption = planillasSubOption.SubOptions.FirstOrDefault(option => option.Id == "mant-horarios-metodos");
+
+                if (generarSuboption != null && generarSuboption.SubOptions != null && generarSuboption.SubOptions.Any())
+                {
+                    // Iterar sobre las subopciones de "Planillas"
+                    <ol class="fs-6 text-muted">
+                        @foreach (var suboption in generarSuboption.SubOptions)
+                        {
+                            if (suboption.List)
+                            {
+                                <li class="nav-item mb-1">
+                                    <a class="btn-link mb-2" data-bs-toggle="collapse" href="#submenu-@suboption.Id" role="button" aria-expanded="false" aria-controls="submenu-@suboption.Id" data-topic="@planillasOption.Action/@planillasSubOption.Action/@generarSuboption.Action/@suboption.Action">
+                                        @suboption.Name
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ol>
+                }
+                else
+                {
+                    <p>No hay subopciones para Planillas Regulares.</p>
+                }
+            }
+        }
+        else
+        {
+            <p>No hay subopciones para Planillas.</p>
+        }
+    }
+    else
+    {
+        <p>No se encontró el menú.</p>
+    }
+}
+

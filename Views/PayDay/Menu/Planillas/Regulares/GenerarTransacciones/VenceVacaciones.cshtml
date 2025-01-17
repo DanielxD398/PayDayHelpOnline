@@ -1,0 +1,17 @@
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+@{
+    ViewData["Title"] = "Menu Planillas";
+    Layout = null; // Deshabilita el layout para esta vista
+}
+
+Al tomar ésta opción se crea la planilla con los trabajadores que pertenecen al <a class="btn-link" href="#" aria-controls="submenu-mant-grupos" data-topic="Mantenimiento/GruposDePago">Grupo de Pago</a> seleccionado y cuyo estatus sea Activo.
+
+Si hay empleados que tienen estatus de Vacaciones, pero que por su periodo libre ya deben incorporarse en la planilla regular, aparecerá la siguiente pantalla indicándole, quienes ya deberían incorporarse a esta planilla, así:
+
+<p align="CENTER"><img src="\images\Planillas\generar_incluyeVac.png"></p>
+
+Para ver un listado detallado de estos empleados, puede dar click en el botón imprimir.
+
+<p align="CENTER"><img width="90%" src="\images\Planillas\generar_listadoRetornoVac.png"></p>

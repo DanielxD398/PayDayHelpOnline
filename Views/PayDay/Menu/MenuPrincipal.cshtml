@@ -1,0 +1,33 @@
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+@{
+    ViewData["Title"] = "Menu Principal de PayDay";
+    Layout = null;
+}
+
+<p>Aquí están las opciones que tiene PayDay en su menú principal</p>
+
+<p align="CENTER"><img src="\images\menuprincipal.png"></p>
+
+Tal como lo muestra la figura anterior, el Menú Principal cuenta con las siguientes opciones, veamos cada una de ellas:
+<ul>
+
+
+    @if (MenuService != null)
+    {
+        var model = MenuService.GetMenu();
+        if (model?.Menu?.MenuOptions != null)
+        {
+            @foreach (var option in model.Menu.MenuOptions)
+            {
+                <li class="nav-item mb-1">
+                    <a class="nav-link" href="#"  data-topic="@option.Action">@option.Name</a>
+                    <p>@option.Description</p>
+                </li>
+            }
+        }
+    }
+
+
+</ul>

@@ -1,0 +1,69 @@
+﻿@using PayDayHelpOnline.Services
+@inject IMenuService MenuService
+
+@{
+    ViewData["Title"] = "Planillas Reloj";
+    Layout = null; // Deshabilita el layout para esta vista
+}
+
+<p>Procesar una planilla regular en PayDay es muy sencillo, están clasificadas de acuerdo a la frecuencia de pago, en los siguientes grupos: Semanales, Bisemanales, Quincenales y Mensuales.  Algunas empresas utilizan sólo uno de estos métodos; otras, una combinación de ellos.   Lo importante es que con PayDay usted podrá realizar cualquiera de estas planillas de forma rápida, sencilla y eficiente. </p>
+
+<p>Antes de comenzar con la planilla regular, se debe verificar lo siguiente:</p>
+
+<ul><li> <u>Que estemos en el periodo correcto</u><br>El periodo nos indica el año y el mes en que esta activo el sistema, Ejemplo: 202110, indica que estamos en octubre del 2021.
+<li> <u>Que no exista otra planilla en proceso </u><br> Para ello puede tomar la opción <i>Informes|Planillas|En Proceso</i>.
+<li> <u>Que el estatus de los trabajadores sea el indicado</u> <br>Para que un empleado se incluya en la planilla regular, su estatus debe ser activo, de lo contrario no entrará en la planilla.  
+<li> <u>Que hemos creado todos los descuentos de acreedores que se deban realizar</u>  <br>Verifique si tiene descuentos nuevos que crear, algunos por actualizar o modificar.
+</ul> 
+
+<p>Luego de haber revisado estos puntos, podemos continuar con los pasos para procesar una planilla regular.</p>
+
+<p>Seleccione en el menú principal la opción  <i>Planilla</i> y luego el tipo de planilla que va a confeccionar, las cuales son: Semanal, Bisemanal, Quincenal o Mensual y siga cada una de las opciones del menú: </p>
+
+@if (MenuService != null)
+{
+    var model = MenuService.GetMenu();
+    if (model?.Menu?.MenuOptions != null)
+    {
+        // Buscar la opción de "Planillas"
+        var planillasOption = model.Menu.MenuOptions.FirstOrDefault(option => option.Id == "pla");
+
+        if (planillasOption != null && planillasOption.SubOptions != null && planillasOption.SubOptions.Any())
+        {
+            var planillasSubOption = planillasOption.SubOptions.FirstOrDefault(option => option.Id == "pla-regulares");
+
+            if (planillasSubOption != null && planillasSubOption.SubOptions != null && planillasSubOption.SubOptions.Any())
+            {
+                // Iterar sobre las subopciones de "Planillas"
+                <ol class="ms-3 fs-6 text-muted">
+                    @foreach (var suboption in planillasSubOption.SubOptions)
+                    {
+                        if (suboption.List)
+                        {
+                            <li class="nav-item mb-1">
+                                <a class="nav-link mb-2" data-bs-toggle="collapse" href="#submenu-@suboption.Id" role="button" aria-expanded="false" aria-controls="submenu-@suboption.Id" data-topic="@planillasOption.Action/@planillasSubOption.Action/@suboption.Action">
+                                    @suboption.Name
+                                </a>
+                            </li>
+                        }
+                    }
+            
+                </ol>
+            }
+            else
+            {
+                <p>No hay subopciones para Planillas Regulares.</p>
+            }
+        }
+        else
+        {
+            <p>No hay subopciones para Planillas.</p>
+        }
+    }
+    else
+    {
+        <p>No se encontró el menú.</p>
+    }
+}
+
+<p>De ser necesario, también puede <a class="btn-link" href="#submenu-pla-eliminar" role="button" aria-controls="submenu-pla-eliminar" data-topic="Planillas/Regulares/Planillas">Eliminar Planilla</a></p>
